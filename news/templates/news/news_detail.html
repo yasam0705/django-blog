@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ news_item.title }}
+{% endblock %}
+
+{% block sidebar %}
+{% include 'inc/_sidebar.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="card mb-3">
+    <div class="card-header">
+        Категория: <a href="{{ news_item.category.get_absolute_url }}">{{ news_item.category.title }}</a>
+    </div>
+    <div class="card-body">
+        {% if news_item.photo %}
+        <img src="{{ news_item.photo.url }}" alt="Image" width="350px" class="float-left mr-3">
+        {% else %}
+        <img src="https://picsum.photos/id/1060/350/254?blur=2" alt="" class="float-left mr-3">
+        {% endif %}
+        <h5 class="card-title">{{ news_item.title }}</h5>
+        <p class="card-text">{{ news_item.content|safe|linebreaks }}</p>
+    </div>
+    <div class="d-flex justify-content-between">
+        <div>
+            {% if news_item.pk != first_news  %}
+            <a href="{{ news_item.get_previous_by_created_at.get_absolute_url }}" class="btn btn-primary ml-3 mb-3">Предыдущая
+                новость</a>
+            {% endif %}
+        </div>
+        <div>
+            {% if news_item.pk != last_news %}
+            <a href="{{ news_item.get_next_by_created_at.get_absolute_url }}" class="btn btn-primary mr-3 mb-3">Следующая
+                новость</a>
+            {% endif %}
+        </div>
+
+    </div>
+
+    <div class="card-footer text-muted">
+        {{ news_item.created_at|date:"Y-m-d H:i:s" }}
+    </div>
+</div>
+{% endblock %}

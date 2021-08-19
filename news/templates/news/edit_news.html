@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Отредактировать новость
+{% endblock %}
+
+{% block sidebar %}
+{% include 'inc/_sidebar.html' %}
+{% endblock %}
+
+{% block content %}
+
+<h1>Редактирование новости</h1>
+
+<br>
+<br>
+<form action="{% url 'edit_news' item.pk %}" method="post">
+    {% csrf_token %}
+
+    {{ form.as_p }}
+    {{ form.non_field.errors }}
+    <button type="submit" class="btn btn-primary btn-block">Сохранить изменения</button>
+</form>
+
+{% endblock %}
